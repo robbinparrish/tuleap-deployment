@@ -1,0 +1,76 @@
+#
+# docker-compose file for deploying Tuleap in Docker.
+#
+
+version: '3.8'
+services:
+  tuleap:
+    image: tuleap/tuleap-community-edition:latest@sha256:a75fcdb553c792a553556c14816055b8dfcd48925783c7ee4da723c6e0baebf8
+    container_name: tuleap
+    environment:
+      - TZ="UTC"
+      - TULEAP_FQDN=tuleap.mydomain.com
+      - TULEAP_SYS_DBHOST=mysql-db
+      - TULEAP_SYS_DBPASSWD=YOUR_TULEAP_DB_PASSWORD
+      - SITE_ADMINISTRATOR_PASSWORD=admin
+      - DB_ADMIN_USER=root
+      - DB_ADMIN_PASSWORD=YOUR_MYSQL_DB_PASSWORD
+      - TULEAP_FPM_SESSION_MODE=redis
+      - TULEAP_REDIS_SERVER=redis
+    volumes:
+      - ./tuleap-data/data:/data
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+    depends_on:
+      - mysql-db
+      - redis
+  mysql-db:
+    image: mysql:8.3.0
+    container_name: mysql-db
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--sql-mode=NO_ENGINE_SUBSTITUTION"]
+    environment:
+      - TZ="UTC"
+      - MYSQL_ROOT_PASSWORD=YOUR_MYSQL_DB_PASSWORD
+    volumes:
+      - ./mysql-db/data:/var/lib/mysql
+      - ./mysql-db/backups:/var/lib/mysql-backups
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+  nginx-reverse-proxy:
+    image: nginx:1.25.3
+    container_name: nginx-reverse-proxy
+    environment:
+      - TZ="UTC"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./configs/certs:/etc/pki/tls/configs-certs
+      - ./configs/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "10"
+  redis:
+    image: redis:7.2.4
+    volumes:
+      - ./redis-data:/data
+    command: redis-server --appendonly yes --auto-aof-rewrite-percentage 20 --auto-aof-rewrite-min-size 200kb

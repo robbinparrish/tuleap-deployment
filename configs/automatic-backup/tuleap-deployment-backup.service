@@ -1,0 +1,5 @@
+[Unit]
+Description=Tuleap Deployment Backup
+
+[Service]
+ExecStart=/usr/bin/tuleap-deployment-backup.sh

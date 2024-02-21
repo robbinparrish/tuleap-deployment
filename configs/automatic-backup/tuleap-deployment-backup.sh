@@ -14,7 +14,7 @@ cd "${TULEAP_DEPLOYMENT_DIR}" || exit 1
 
 # Backup configuration files.
 mkdir -p "${TULEAP_DEPLOYMENT_BACKUP_DIR}"
-cp -av ./tuleap-data/data/var/lib/tuleap ./tuleap-data/data/var/lib/gitolite "${TULEAP_DEPLOYMENT_BACKUP_DIR}"/
+cp -av ./tuleap-data/data/etc ./tuleap-data/data/var/lib/tuleap ./tuleap-data/data/var/lib/gitolite "${TULEAP_DEPLOYMENT_BACKUP_DIR}"/
 
 # Create backup.
 mkdir -p ./mysql-db/backups

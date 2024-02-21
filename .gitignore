@@ -27,5 +27,7 @@
 !configs/nginx/
 !configs/nginx/default.conf
 !configs/backup-and-restore.md
+!configs/email-configuration.md
+!configs/gitlab-openid-support.md
 !configs/upgrading-tuleap.md
 

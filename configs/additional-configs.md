@@ -24,6 +24,9 @@
 	- Moderation.
 		- Project creation moderation.
 			- `Enable` Project must be approved by administrators.
+	- Visibility.
+		- Default project visibility.
+			- Change default visibility to `Private`.
 
 ### Plugins Settings.
 - Manage all plugins.
@@ -44,12 +47,8 @@
 - OpenID Connect Client.
 	- `Delete` default OAuth Client Provider.
 	- If requires then `Add Provider`.
-
-	#### Enabling authentication using Gitlab OAuth Application - `NOT TESTED`
-	https://docs.gitlab.com/ee/integration/oauth_provider.html
-
-	- Scope - openid, profile, email.
-	- OpenID Settings - https://GITLAB_DOMAIN/.well-known/openid-configuration
+	
+	NOTE - For GitLab, please check [GitLab OpenID Support](./gitlab-openid-support.md).
 
 ### Global Configuration Settings.
 - Global access rights.
@@ -61,3 +60,6 @@
 - Homepage.
 	- `Disable` Display platform statistics on home page.
 	- `Disable` Display site news on home page.
+	
+## Email Configuration.
+For Email configuration, please check [Email Configuration](./email-configuration.md).

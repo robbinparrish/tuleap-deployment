@@ -7,6 +7,7 @@ services:
   tuleap:
     image: tuleap/tuleap-community-edition:latest@sha256:a75fcdb553c792a553556c14816055b8dfcd48925783c7ee4da723c6e0baebf8
     container_name: tuleap
+    hostname: tuleap.mydomain.com
     environment:
       - TZ="UTC"
       - TULEAP_FQDN=tuleap.mydomain.com
@@ -19,6 +20,11 @@ services:
       - TULEAP_REDIS_SERVER=redis
     volumes:
       - ./tuleap-data/data:/data
+      - ./tuleap-data/logs:/var/log
+      - ./tuleap-data/logs/tuleap:/var/log/tuleap
+      - ./tuleap-data/logs/nginx:/var/log/nginx
+      - ./tuleap-data/logs/httpd:/var/log/httpd
+      - ./tuleap-data/logs/supervisor:/var/log/supervisor
     restart: always
     ulimits:
       nproc: 65535
@@ -73,4 +79,5 @@ services:
     image: redis:7.2.4
     volumes:
       - ./redis-data:/data
+    restart: always
     command: redis-server --appendonly yes --auto-aof-rewrite-percentage 20 --auto-aof-rewrite-min-size 200kb

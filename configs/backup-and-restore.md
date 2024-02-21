@@ -7,6 +7,7 @@ Since Tuleap stores all data in the `mysql` database so we will need to backup t
 All backups are stored in `./mysql-db/backups` directory.  
 Along with the backup following directories must be `manually` backed up.  
 ```
+./tuleap-data/data/etc
 ./tuleap-data/data/var/lib/tuleap
 ./tuleap-data/data/var/lib/gitolite
 ```
@@ -37,10 +38,12 @@ docker-compose down tuleap
 - Restore/Copy the configuration files.
 ```
 First remove existing directories.
+./tuleap-data/data/etc
 ./tuleap-data/data/var/lib/tuleap
 ./tuleap-data/data/var/lib/gitolite
 
 Now copy backed up directories.
+Copy etc to ./tuleap-data/data/
 Copy tuleap to ./tuleap-data/data/var/lib/tuleap
 Copy gitolite to ./tuleap-data/data/var/lib/gitolite
 ```

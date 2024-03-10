@@ -22,5 +22,5 @@ cp tuleap-deployment-backup.timer tuleap-deployment-backup.service /etc/systemd/
 ## Enable the timer.
 ```bash
 systemctl daemon-reload
-systemctl enable tuleap-deployment-backup.timer
+systemctl enable --now tuleap-deployment-backup.timer
 ```
